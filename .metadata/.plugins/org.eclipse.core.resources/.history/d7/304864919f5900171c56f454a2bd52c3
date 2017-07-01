@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner in = new Scanner(System.in);
+		while(in.hasNext()){
+			int n = in.nextInt();
+			int tree[]  = new int[n+1];
+			int sum[] = new int[n+1];
+			for(int i =0;i<=n;i++){
+				tree[i]=-1;
+				sum[i]=1;
+			}
+			
+			for (int i = 1; i <= n; i++) {
+				int a = findRoot( tree,in.nextInt());
+			}
+		}
+	}
+
+	private static int findRoot(int tree[],int nextInt) {
+		int origin = nextInt;
+		while(tree[nextInt]!=-1){
+			nextInt = tree[nextInt];
+		}
+		while(tree[origin]!=-1){
+			int temp = origin;
+			origin = tree[origin];
+			tree[temp]=nextInt;
+		}
+		
+		return nextInt;
+	}
+
+}
