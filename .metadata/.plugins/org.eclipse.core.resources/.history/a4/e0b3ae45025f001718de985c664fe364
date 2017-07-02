@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+/**
+ * 完全背包问题，即物品有无限个，求最大或者最小重量
+ * @author yousheng
+ *
+ */
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int t = in.nextInt(); 
+		while(t--!=0){
+			int s = in.nextInt()-in.nextInt();
+			s=0-s;
+			int n = in.nextInt();
+			int value[] = new int[n+1];
+			int weight[] = new int[n+1];
+			for (int i = 1; i <= n; i++) {
+				value[i] = in.nextInt();
+				weight[i] = in.nextInt();
+			}
+			int dp[] = new int[s+1];
+			dp[0] = 0;
+			for (int i = 1; i < dp.length; i++) {
+				dp[i] = -1;
+			}
+			
+			for (int i = 1; i <= n; i++) {
+				for (int j = weight[i]; j <= s; j++) {
+					if(dp[j-weight[i]]!=-1){
+						dp[j] = Math.min(dp[j], dp[j-weight[i]]+value[i]);
+					}
+				}
+			}
+			if(dp[s]==-1 ){
+				System.out.println("This is impossible.");
+			}else System.out.println("The minimum amount of money in the piggy-bank is "+dp[s]+".");
+			
+		}
+	}
+
+}
