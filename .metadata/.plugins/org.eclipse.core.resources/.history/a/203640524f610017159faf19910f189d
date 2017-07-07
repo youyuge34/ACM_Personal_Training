@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+/**
+ * 较难的dp问题，n个数字中选取最大的和相等的两份
+ * @author yousheng
+ *
+ */
+class Node {
+	int w;
+	int v;
+	public Node(int w, int v) {
+		super();
+		this.w = w;
+		this.v = v;
+	}
+	
+}
+public class Main {
+	public static int OFFSET =2000;
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int t = in.nextInt();
+		while(t--!=0){
+			int n = in.nextInt();
+			int[][] dp = new int[n+1][2010];
+			
+			
+			
+		}
+	}
+
+}

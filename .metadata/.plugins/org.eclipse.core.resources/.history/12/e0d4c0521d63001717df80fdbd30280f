@@ -1,0 +1,107 @@
+import java.util.Scanner;
+
+class Node {
+	public int var;
+
+	public Node(int var) {
+		super();
+		this.var = var;
+	}
+
+}
+
+public class Main {
+	Node[] nodeList = new Node[200009];
+
+	Scanner in = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		new Main().run();
+	}
+
+	public void run() {
+		int t = in.nextInt();
+		int cas = 0;
+		while (t-- != 0) {
+			int n = in.nextInt();
+			int sum[] = new int[2000];
+			for (int i = 0; i < n ; i++) {
+				sum[i] = in.nextInt();
+			}
+			build(0, n-1, 0, sum);
+			System.out.println("Case "+(++cas)+":");
+//			while(in.hasNext()){
+//				String s = in.next();
+//				if(s.charAt(0) == 'E'){
+//					break;
+//				}
+//				switch(s.charAt(0)){
+//				case 'Q':
+//					int l = in.nextInt();
+//					int r = in.nextInt();
+//					System.out.println(query(0, n-1, l, r, 1, sum));
+//					break;
+//					
+//				case 'A':
+//					update(0, n-1, 1, in.nextInt(), in.nextInt(), sum);
+//					break;
+//				case 'S':
+//					update(0, n-1, 1, in.nextInt(), -in.nextInt(), sum);
+//					break;
+//				}
+//			}
+			
+		}
+	}
+
+	private void build(int l, int r, int root, int[] sum) {
+//		System.out.println("build----"+root);
+		nodeList[root] = new Node(0);
+		if (l == r) {
+			nodeList[root].var = sum[l];
+			return;
+		}
+		int mid = (l + r) >> 1;
+		build(l, mid, root << 1, sum);
+		build(mid + 1, r, (root *2 )+ 1, sum);
+		plusPush(root);
+	}
+
+	private void update(int l, int r, int root, int id, int add,int[]sum) {
+		if (l == r && id == l) {
+			nodeList[root].var += add;
+			return;
+		}
+
+		int m = (l + r) >> 1;
+		if (id <= m) {
+			update(l, m, root << 1, id, add,sum);
+		} else
+			update(m + 1, r, root*2+ 1, id, add,sum);
+
+		plusPush(root);
+
+	}
+
+	private int query(int l, int r, int ql, int qr, int root, int[] sum) {
+		if (ql <= l && r <= qr) {
+			return nodeList[root].var;
+		}
+		int mid = (l + r) >> 1;
+		int ans = 0;
+		if (ql <= mid)
+			ans += query( l, mid, ql, qr,root << 1, sum);
+		if (qr > mid)
+			ans += query( mid + 1, r,ql, qr, root << 1 | 1, sum);
+
+		return ans;
+	}
+
+	private void plusPush(int root) {
+//		System.out.println("plusPush----"+root);
+//		if(nodeList[root*2] == null){
+//			System.out.println(root*2 +"is null");
+//		}
+		nodeList[root].var = nodeList[root << 1].var + nodeList[(root *2 )+ 1].var;
+	}
+}

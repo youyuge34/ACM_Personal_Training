@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+/**
+ * 较难的dp问题，n个数字中选取最大的和相等的两份
+ * @author yousheng
+ *
+ */
+
+public class Main {
+	public static int OFFSET =2000;
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int t = in.nextInt();
+		int cas  =0;
+		while(t--!=0){
+			boolean f = false;
+			int n = in.nextInt();
+			int temp = 0;
+			int[] list = new int[n+1];
+			for (int i = 0; i < n; i++) {
+				int j = in.nextInt();
+				if(j==0){
+					f = true;
+				}else {
+					list[++temp]  = j;
+				}
+			}
+			n = temp;	//去除重量为0的柑橘之后
+			
+			int[][] dp = new int[n+1][4001];
+			for (int i = 0; i < dp[0].length; i++) {
+				dp[0][i] = Integer.MIN_VALUE;
+			}
+			dp[0][0] = 0;
+			for(int i = 1;i<=n;i++){
+				for(int j = 0;j<4001;j++){
+					int temp1 = Integer.MIN_VALUE;
+					int temp2 = Integer.MIN_VALUE;
+					if(j>=list[i] && dp[i-1][j-list[i]]>=0){
+						temp1 = dp[i-1][j-list[i]]+list[i];
+					}
+					if(j+list[i]<4001 && dp[i-1][j+list[i]]>=0){
+						temp2 = dp[i-1][j+list[i]]+list[i];
+					}
+					temp1 = Math.max(temp1, temp2);
+					temp1 = Math.max(temp1, dp[i-1][j]);
+					dp[i][j] = temp1;
+				}
+			}
+			System.out.print("Case "+(++cas)+": ");
+			if(dp[n][2000] == 0){
+				System.out.println(f?0:-1);
+			}else System.out.println(dp[n][2000]/2);
+			
+		}
+	}
+
+}

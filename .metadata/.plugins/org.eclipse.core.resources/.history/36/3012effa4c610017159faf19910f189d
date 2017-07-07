@@ -1,0 +1,14 @@
+
+/**
+ * 较难的dp问题，n个数字中选取最大的和相等的两份
+ * @author yousheng
+ *
+ */
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
